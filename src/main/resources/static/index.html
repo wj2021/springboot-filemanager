@@ -1,0 +1,62 @@
+<!doctype html>
+<html data-ng-app="FileManagerApp">
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>FileManager</title>
+
+    <!-- 第三方插件 -->
+    <script src="lib/jquery-3.5.1.min.js"></script>
+    <script src="lib/bootstrap-4.5.3.min.js"></script>
+    <script src="lib/angular-1.5.9.min.js"></script>
+    <script src="lib/angular-translate-2.18.3.min.js"></script>
+    <script src="lib/ng-file-upload-12.2.13.min.js"></script>
+
+    <link rel="stylesheet" href="webjars/bootswatch-paper/3.3.5+4/css/bootstrap.min.css"/>
+
+    <link rel="stylesheet" href="dist/angular-filemanager.min.css">
+    <script src="dist/angular-filemanager.min.js"></script>
+
+    <script type="text/javascript">
+        // 重写默认Config配置
+        angular.module('FileManagerApp').config(['fileManagerConfigProvider', function (config) {
+            var defaults = config.$get();
+            config.set({
+                appName: '/',
+                defaultLang: 'zh',
+                listUrl: '/fileManager/list/',
+                uploadUrl: '/fileManager/upload/',
+                downloadFileUrl: '/fileManager/preview/',
+                createFolderUrl: '/fileManager/createFolder/',
+                permissionsUrl: '/fileManager/changePermissions/',
+                copyUrl: '/fileManager/copy/',
+                moveUrl: '/fileManager/move/',
+                removeUrl: '/fileManager/remove/',
+                renameUrl: '/fileManager/rename/',
+                getContentUrl: '/fileManager/getContent/',
+                editUrl: '/fileManager/edit/',
+                compressUrl: '/fileManager/compress/',
+                extractUrl: '/fileManager/extract/',
+                documentViewUrl: '/office/',
+                pickCallback: function (item) {
+                    var msg = 'Picked %s "%s" for external use'
+                            .replace('%s', item.type)
+                            .replace('%s', item.fullPath());
+                    window.alert(msg);
+                },
+
+                allowedActions: angular.extend(defaults.allowedActions, {
+                    pickFiles: false,
+                    pickFolders: false,
+                    downloadMultiple: false
+                }),
+                tplPath: 'app/templates'
+            });
+        }]);
+    </script>
+</head>
+
+<body class="ng-cloak">
+<angular-filemanager></angular-filemanager>
+</body>
+</html>
